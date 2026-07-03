@@ -1,22 +1,11 @@
-# Antigravity CLI Agents & MCP Configuration
+# Cognitive Memory & Decision-Making Guidelines for AI Agent
 
-This file provides declarative routing, service definitions, and cognitive instructions for the decision-memory environment.
+This file provides the core cognitive instructions, directory structures, and behavioral guidelines for the long-term memory vault.
 
-## 1. MCP Servers
-
-- **memory_mcp**:
-  - command: python
-  - args: ["-m", "mcp_server.server"]
-  - env:
-    - PYTHONPATH: "."
-    - MEMORY_VAULT_PATH: "d:/investment"
-
----
-
-## 2. CRITICAL INSTRUCTION FOR AI AGENT (强制记忆唤醒指令)
+## 1. CRITICAL INSTRUCTION FOR AI AGENT (强制记忆唤醒指令)
 
 > [!IMPORTANT]
-> **YOU MUST ACTIVE-USE THIS EXTERNAL MEMORY VAULT!**
+> **YOU MUST ACTIVELY USE THIS EXTERNAL MEMORY VAULT!**
 > 
 > 作为 AI 智能体，你的上下文窗口（Context Window）是短暂且狭窄的。本 MCP 服务是你的**长期外部记忆大脑**。
 > 
@@ -27,7 +16,7 @@ This file provides declarative routing, service definitions, and cognitive instr
 
 ---
 
-## 3. The 5-Module Memory Directory Schema (认知子目录定义)
+## 2. The 5-Module Memory Directory Schema (认知子目录定义)
 
 为了保持你大脑知识库的干净与专注，你必须将所有长期沉淀的知识严格分类到以下五个子目录中：
 
@@ -58,7 +47,7 @@ This file provides declarative routing, service definitions, and cognitive instr
 
 ---
 
-## 4. ECS (Entity-Component-System) Structure for World Models
+## 3. ECS (Entity-Component-System) Structure for World Models
 
 在编写 `agent-memory/model/` 下的世界模型知识点时，必须遵循以下 ECS 强类型规范：
 1.  **Entity (实体)**：世界中的主体对象（如具体公司 `Tencent.md`、具体国家）。
