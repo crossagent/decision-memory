@@ -56,4 +56,6 @@ Stable world models inside `agent-memory/model/` should follow the ECS taxonomy:
 
 ## 4. The Core Philosophy of Context Indexing
 
-> **“Memory is not a dump of files, but an index for future Context Windows. LLMs can only act upon what is immediately within their context. Tags and wikilinks exist to drag the entire relevant semantic network into the LLM's attention spotlight when a specific cue is triggered. What is not linked is effectively forgotten.”**
+> **“Memory is not a dump of files, but an index for future Context Windows. LLMs can only act upon what is immediately within their context. Tags and wikilinks exist to drag the entire relevant semantic network into the LLM's attention spotlight when a specific cue is triggered. Querying itself is path-building — every search and fusion is wiring a cognitive synapse. What is not linked is effectively forgotten.”**
+> 
+> **“记忆的本质，不是文件的堆砌，而是为未来的上下文窗口（Context Window）制造索引。LLM 只能激活它眼前的上下文，而双链和标签，就是在这个注意力的探照灯扫过来时，能为它连带拉出整张认知关系网络的那根绳索。查询本身就是在建立路径——每一次检索和融汇，都是在为认知突触连线；一次任务里没有被当前 link/tag 通路激活的内容，就是本次推理中的‘遗忘’。”**
