@@ -1,0 +1,21 @@
+[project]
+name = "memory-mcp"
+version = "0.1.0"
+description = "A cybernetic 5-module agent long-term memory server using Model Context Protocol (MCP) and Obsidian wikilinks."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.0.0",
+    "pydantic>=2.0.0",
+    "fastmcp>=0.1.0"
+]
+
+[project.scripts]
+memory-mcp = "server:mcp.run"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
