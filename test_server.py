@@ -2,14 +2,12 @@ import os
 import unittest
 import uuid
 
-from mcp_server.vault import (
+from mcp_server.common import parse_front_matter, resolve_path
+from mcp_server.memorize import save_model_note, save_simulation_note
+from mcp_server.recall import (
     get_backlinks,
     get_linked_chain,
-    parse_front_matter,
     read_agent_memory_note,
-    resolve_path,
-    save_model_note,
-    save_simulation_note,
     search_agent_memory_notes,
 )
 
