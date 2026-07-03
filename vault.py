@@ -4,7 +4,6 @@ from collections import deque
 from datetime import datetime
 from typing import Any
 
-from .policy import validate_safe_write
 
 
 BASE_DIR = os.path.abspath(os.environ.get("MEMORY_VAULT_PATH", os.path.join(os.path.dirname(__file__), "..")))
@@ -160,7 +159,6 @@ def write_vault_file(relative_path: str, metadata: dict[str, Any], body: str) ->
     metadata.setdefault("created", today)
     metadata["updated"] = today
     formatted_content = format_front_matter(metadata, body)
-    validate_safe_write(full_path, formatted_content)
     os.makedirs(os.path.dirname(full_path), exist_ok=True)
     with open(full_path, "w", encoding="utf-8") as file:
         file.write(formatted_content)

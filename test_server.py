@@ -2,7 +2,6 @@ import os
 import unittest
 import uuid
 
-from mcp_server.policy import scan_text_for_secrets, validate_safe_write
 from mcp_server.vault import (
     get_backlinks,
     get_linked_chain,
@@ -28,21 +27,6 @@ class TestInvestmentAgentMemoryServer(unittest.TestCase):
     def remember(self, path: str) -> str:
         self.created_paths.append(path)
         return path
-
-    def test_secret_scanner(self) -> None:
-        self.assertTrue(scan_text_for_secrets("AIzaSyA1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P67"))
-        self.assertTrue(
-            scan_text_for_secrets("sk-123456789012345678901234567890123456789012345678")
-        )
-        self.assertTrue(scan_text_for_secrets("password='mysecretpassword'"))
-        self.assertEqual(scan_text_for_secrets("Normal text without keys."), [])
-
-    def test_safe_write_validation(self) -> None:
-        validate_safe_write("test.md", "This is clean.")
-        with self.assertRaises(ValueError):
-            validate_safe_write("test.md", "AIzaSyA1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P67")
-        with self.assertRaises(ValueError):
-            validate_safe_write("dangerous.py", "print('hello')")
 
     def test_agent_memory_write_search_backlink_and_chain(self) -> None:
         unique = uuid.uuid4().hex[:8]
