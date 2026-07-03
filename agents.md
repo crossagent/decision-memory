@@ -2,12 +2,7 @@
 
 This file provides declarative routing, service definitions, and cognitive instructions for the decision-memory environment.
 
-## 1. Sub-Agents (A2A Static Connections)
-
-- **quant_agent**: http://127.0.0.1:8002/a2a/quant_agent
-- **observation_agent**: http://127.0.0.1:8003/a2a/observation_agent
-
-## 2. MCP Servers
+## 1. MCP Servers
 
 - **memory_mcp**:
   - command: python
@@ -18,7 +13,7 @@ This file provides declarative routing, service definitions, and cognitive instr
 
 ---
 
-## 3. CRITICAL INSTRUCTION FOR AI AGENT (强制记忆唤醒指令)
+## 2. CRITICAL INSTRUCTION FOR AI AGENT (强制记忆唤醒指令)
 
 > [!IMPORTANT]
 > **YOU MUST ACTIVE-USE THIS EXTERNAL MEMORY VAULT!**
@@ -32,7 +27,7 @@ This file provides declarative routing, service definitions, and cognitive instr
 
 ---
 
-## 4. The 5-Module Memory Directory Schema (认知子目录定义)
+## 3. The 5-Module Memory Directory Schema (认知子目录定义)
 
 为了保持你大脑知识库的干净与专注，你必须将所有长期沉淀的知识严格分类到以下五个子目录中：
 
@@ -63,7 +58,7 @@ This file provides declarative routing, service definitions, and cognitive instr
 
 ---
 
-## 5. ECS (Entity-Component-System) Structure for World Models
+## 4. ECS (Entity-Component-System) Structure for World Models
 
 在编写 `agent-memory/model/` 下的世界模型知识点时，必须遵循以下 ECS 强类型规范：
 1.  **Entity (实体)**：世界中的主体对象（如具体公司 `Tencent.md`、具体国家）。
