@@ -1,61 +1,71 @@
 # Antigravity CLI Agents & MCP Configuration
 
-This file provides declarative routing, service definitions, and cognitive directory guidelines for the decision-memory environment.
+This file provides declarative routing, service definitions, and cognitive instructions for the decision-memory environment.
 
-## 1. Quick Start & MCP Server Configuration
+## 1. Sub-Agents (A2A Static Connections)
 
-To register this long-term memory server into your Antigravity environment, declare it under the `mcp_servers` section of your workspace configuration (e.g., `agents.md`):
+- **quant_agent**: http://127.0.0.1:8002/a2a/quant_agent
+- **observation_agent**: http://127.0.0.1:8003/a2a/observation_agent
 
-```markdown
-## MCP Servers
+## 2. MCP Servers
 
 - **memory_mcp**:
   - command: python
   - args: ["-m", "mcp_server.server"]
   - env:
     - PYTHONPATH: "."
-    - MEMORY_VAULT_PATH: "path/to/your/obsidian/vault" # 👈 Custom path to your memory directory
-```
+    - MEMORY_VAULT_PATH: "d:/investment"
 
 ---
 
-## 2. The 5-Module Memory Directory Schema (Cognitive Roles)
+## 3. CRITICAL INSTRUCTION FOR AI AGENT (强制记忆唤醒指令)
 
-This memory vault enforces a cybernetic loop, forcing your Agent to categorize all long-term knowledge into 5 distinct subdirectories under your target `MEMORY_VAULT_PATH`:
-
-### 📁 `model/` (World Model & Hard Constraints)
-*   **Role**: Stores durable beliefs about the world's mechanisms (e.g., "Mean Reversion", "Credit Cycles") and strict personal constraints (e.g., max drawdown limit, financial goals).
-*   **Cognitive Intent**: Serves as the "anchor" of the agent's prior probabilities and hard behavioral rules.
-
-### 📁 `simulation/` (Forward Simulation & Probability Work)
-*   **Role**: Staging ground for predictions, scenarios, backtest metrics, and probability calculations before execution.
-*   **Cognitive Intent**: Forces the agent to document predictions *before* action to defeat hindsight bias (Hindsight Bias).
-
-### 📁 `control/` (Action Governance & Decisions)
-*   **Role**: Stores real-world actions, transaction choices, rebalancing plans, or explicit decisions of **inaction / waiting**.
-*   **Cognitive Intent**: Acts as the steering wheel and brakes under the constraints of the world model.
-
-### 📁 `perception/` (Facts & Sensory Observations)
-*   **Role**: Raw sensor data containing filings, market prices, statements, or realized outcomes.
-*   **Cognitive Intent**: Strictly records objective external facts. **No subjective attributions or trading authorization allowed.**
-
-### 📁 `learning/` (Review, Reflection & Evolution)
-*   **Role**: Validates predictions (Simulation) and plans (Control) against actual outcomes (Perception) to score win rates and generate promotions for the world model.
-*   **Cognitive Intent**: Binds the cybernetic feedback loop together to allow cognitive evolution.
-
----
-
-## 3. ECS (Entity-Component-System) Structure for World Models
-
-Stable world models inside `agent-memory/model/` should follow the ECS taxonomy:
-1.  **Entity**: Specific subject (e.g., `GOOG.md`, `Tencent.md`, `Federal_Reserve.md`).
-2.  **Component**: Properties/attributes attached to entities (e.g., PE ratio, Debt ratio).
-3.  **System**: Durable physical/financial laws governing how components change over time or transmit signals between entities.
-
----
-
-## 4. The Core Philosophy of Context Indexing
-
-> **“Memory is not a dump of files, but an index for future Context Windows. LLMs can only act upon what is immediately within their context. Tags and wikilinks exist to drag the entire relevant semantic network into the LLM's attention spotlight when a specific cue is triggered. Querying itself is path-building — every search and fusion is wiring a cognitive synapse. What is not linked is effectively forgotten.”**
+> [!IMPORTANT]
+> **YOU MUST ACTIVE-USE THIS EXTERNAL MEMORY VAULT!**
 > 
-> **“记忆的本质，不是文件的堆砌，而是为未来的上下文窗口（Context Window）制造索引。LLM 只能激活它眼前的上下文，而双链和标签，就是在这个注意力的探照灯扫过来时，能为它连带拉出整张认知关系网络的那根绳索。查询本身就是在建立路径——每一次检索和融汇，都是在为认知突触连线；一次任务里没有被当前 link/tag 通路激活的内容，就是本次推理中的‘遗忘’。”**
+> 作为 AI 智能体，你的上下文窗口（Context Window）是短暂且狭窄的。本 MCP 服务是你的**长期外部记忆大脑**。
+> 
+> **硬性行为准则**：
+> 1.  **先想后做 (Search Before You Act)**：在开始任何复杂的分析、重构、投资计划或决策前，**你必须首先调用 `search_notes` 或 `read_note` 检索外部记忆**。查找是否有已存在的世界规律（Model）、前期的情景推演（Simulation）或历史上的失败教训（Learning）。
+> 2.  **严禁短视 (No Short-termism)**：只依赖你眼前的 Prompt 上下文而不去检索历史记忆的行为，视作严重的认知懈怠和不负责任。
+> 3.  **查询即是建路 (Querying is Path-building)**：每一次检索、双链引用和反思写入，都是在为你大脑的认知突触进行连线。
+
+---
+
+## 4. The 5-Module Memory Directory Schema (认知子目录定义)
+
+为了保持你大脑知识库的干净与专注，你必须将所有长期沉淀的知识严格分类到以下五个子目录中：
+
+### 📁 `model/` (世界模型 & 规则约束)
+*   **物理路径**：`agent-memory/model/`
+*   **定位**：客观世界运行规律的持久信念（如“均值回归”、“信用周期”）以及个人硬性资产边界。
+*   **作用**：是决策系统的“锚”，提供行动的物理规律和先验约束。
+
+### 📁 `simulation/` (前向仿真 & 概率测算)
+*   **物理路径**：`agent-memory/simulation/`
+*   **定位**：行动前的沙盒推演。包括个股涨跌幅预测（`stock-prediction`）、量化回测或概率估算。
+*   **作用**：强迫你在行动前留下无偏见的书面预测，对抗事后诸葛亮偏差。
+
+### 📁 `control/` (决策控制 & 行动治理)
+*   **物理路径**：`agent-memory/control/`
+*   **定位**：具体买卖决策、调仓计划、或明确做出的“等待/不行动”决策。
+*   **作用**：基于 Model 的风险限制与 Simulation 的赢面估算，产生现实动作。
+
+### 📁 `perception/` (客观感知 & 事实传感器)
+*   **物理路径**：`agent-memory/perception/`
+*   **定位**：只记录最真实的外部客观事实，例如公司公告、大盘日线行情、账户资产快照。
+*   **作用**：提供最真实的物理反馈，**禁止包含任何主观推论、归因或交易授权**。
+
+### 📁 `learning/` (反思复盘 & 进化提案)
+*   **物理路径**：`agent-memory/learning/`
+*   **定位**：胜率打分、归因分析、失误复盘和 Model 的更新促进提案（Promotions）。
+*   **作用**：对比预测（Simulation）、行动（Control）与真实反馈（Perception），完成认知闭环。
+
+---
+
+## 5. ECS (Entity-Component-System) Structure for World Models
+
+在编写 `agent-memory/model/` 下的世界模型知识点时，必须遵循以下 ECS 强类型规范：
+1.  **Entity (实体)**：世界中的主体对象（如具体公司 `Tencent.md`、具体国家）。
+2.  **Component (组件)**：附加在实体上的状态或属性（如市盈率、负债率）。
+3.  **System (系统)**：描述组件状态如何在时间中变化，或如何在实体之间传导的金融/物理规律。
