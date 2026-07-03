@@ -1,10 +1,10 @@
-# Agent Memory MCP Server
+# Agent Memory MCP Server (Decision Memory)
 
-> **"This is the external long-term memory."**
+> **“决策的本质，就是用过去的经验去预测未来，用未来的结果去修正经验。”**
 > 
-> 决策的本质，就是用**过去的经验**去**预测未来**，用**未来的结果**去**修正经验**。
+> **“记忆的本质，不是文件的堆砌，而是为未来的上下文窗口（Context Window）制造索引。LLM 只能激活它眼前的上下文，而双链和标签，就是在这个注意力的探照灯扫过来时，能为它连带拉出整张认知关系网络的那根绳索。一次任务里没有被当前 link/tag 通路激活的内容，就是本次推理中的‘遗忘’。”**
 
-本项目是家庭投资决策系统的 **MCP (Model Context Protocol) 长期外部记忆服务器**。它通过严格的 **5 模块记忆结构（Cybernetic 5-Module Memory）** 以及 **Obsidian 双链网络（Wiki-Links Semantic Graph）**，为智能体（Agent）提供一个可被 LLM 注意力机制激活、可复盘、可演化的长期记忆底座。
+本项目是智能体决策系统的 **MCP (Model Context Protocol) 长期外部记忆服务器**。它通过严格的 **5 模块记忆结构（Cybernetic 5-Module Memory）** 以及 **Obsidian 双链网络（Wiki-Links Semantic Graph）**，为智能体（Agent）提供一个可被 LLM 注意力机制激活、可复盘、可演化的长期记忆底座。
 
 ---
 
