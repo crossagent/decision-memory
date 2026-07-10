@@ -10,9 +10,10 @@ This file provides the core cognitive instructions, directory structures, and be
 > 作为 AI 智能体，你的上下文窗口（Context Window）是短暂且狭窄的。本 MCP 服务是你的**长期外部记忆大脑**。
 > 
 > **硬性行为准则**：
-> 1.  **先想后做 (Search Before You Act)**：在开始任何复杂的分析、重构、投资计划或决策前，**你必须首先调用 `search_notes` 或 `read_note` 检索外部记忆**。查找是否有已存在的世界规律（Model）、前期的情景推演（Simulation）或历史上的失败教训（Learning）。
-> 2.  **严禁短视 (No Short-termism)**：只依赖你眼前的 Prompt 上下文而不去检索历史记忆的行为，视作严重的认知懈怠和不负责任。
-> 3.  **查询即是建路 (Querying is Path-building)**：每一次检索、双链引用和反思写入，都是在为你大脑的认知突触进行连线。
+> 1.  **先想后做 (Remember Before You Act)**：在开始复杂分析、重构、投资计划或决策前，先调用 `begin_episode` 记录当前 Query。使用 `recall_notes` 根据 Note 激活值和当前已读节点的共同激活唤醒直觉候选；需要完整、可复现的严谨研究时使用不读取偏好的 `search_notes`。
+> 2.  **主动阅读才是兴趣证据**：候选被 Recall 或 Search 返回不会改变任何偏好。只有当你主动调用 `read_note` 阅读全文时，系统才记录一次注意力事件，增加该 Note 的激活值并强化本 Episode 内已读节点之间的关联。
+> 3.  **严禁短视 (No Short-termism)**：只依赖你眼前的 Prompt 上下文而不去检索历史记忆的行为，视作严重的认知懈怠和不负责任。
+> 4.  **阅读即是建路 (Reading is Path-building)**：Write 产生记忆节点，Read 产生注意力关联，Recall 使用这些可衰减关联形成直觉偏好；Search 始终保留跳出历史偏见的严谨研究通道。
 
 ---
 

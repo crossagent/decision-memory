@@ -10,10 +10,16 @@ from .memorize import (
     save_perception_note,
     save_simulation_note,
 )
+from .index import (
+    begin_episode as create_attention_episode,
+    index_note,
+    record_read,
+)
 from .recall import (
     get_backlinks,
     get_linked_chain,
     read_agent_memory_note,
+    recall_agent_memory_notes,
     search_agent_memory_notes,
 )
 
@@ -42,7 +48,8 @@ def save_model(
     prediction rules that have survived learning.
     """
     path = save_model_note(kind, title, body, tags, links, status, properties)
-    return dumps({"path": path, "module": "model"})
+    indexed = index_note(path)
+    return dumps({"path": path, "id": indexed["note_id"], "module": "model"})
 
 
 @mcp.tool()
@@ -61,7 +68,10 @@ def save_simulation(
     internal trial runs before commitment.
     """
     path = save_simulation_note(kind, title, body, tags, links, status, properties)
-    return dumps({"path": path, "module": "simulation"})
+    indexed = index_note(path)
+    return dumps(
+        {"path": path, "id": indexed["note_id"], "module": "simulation"}
+    )
 
 
 @mcp.tool()
@@ -80,7 +90,8 @@ def save_control(
     executing, or stopping under model constraints.
     """
     path = save_control_note(kind, title, body, tags, links, status, properties)
-    return dumps({"path": path, "module": "control"})
+    indexed = index_note(path)
+    return dumps({"path": path, "id": indexed["note_id"], "module": "control"})
 
 
 @mcp.tool()
@@ -99,7 +110,10 @@ def save_perception(
     attribution or trade authorization.
     """
     path = save_perception_note(kind, title, body, tags, links, status, properties)
-    return dumps({"path": path, "module": "perception"})
+    indexed = index_note(path)
+    return dumps(
+        {"path": path, "id": indexed["note_id"], "module": "perception"}
+    )
 
 
 @mcp.tool()
@@ -118,13 +132,29 @@ def save_learning(
     the model should change.
     """
     path = save_learning_note(kind, title, body, tags, links, status, properties)
-    return dumps({"path": path, "module": "learning"})
+    indexed = index_note(path)
+    return dumps({"path": path, "id": indexed["note_id"], "module": "learning"})
 
 
 @mcp.tool()
-def read_note(note_ref: str) -> str:
-    """Read an agent-memory note by path, title, filename stem, or Obsidian wiki-link."""
-    return dumps(read_agent_memory_note(note_ref))
+def begin_episode(query_text: str) -> str:
+    """Start a thought chain that records only query text, time, and read order."""
+    return dumps(create_attention_episode(query_text))
+
+
+@mcp.tool()
+def read_note(
+    note_ref: str,
+    episode_id: str,
+) -> str:
+    """Read one chosen note and record the resulting interest event.
+
+    A read is the only retrieval action that reinforces future recall. Merely
+    appearing in recall or search results never changes preference.
+    """
+    note = read_agent_memory_note(note_ref)
+    note["attention"] = record_read(episode_id, note["path"])
+    return dumps(note)
 
 
 @mcp.tool()
@@ -135,9 +165,23 @@ def search_notes(
     kind: str | None = None,
     status: str | None = None,
     limit: int = 20,
+    offset: int = 0,
 ) -> str:
-    """Search agent-memory using text plus Obsidian-style metadata filters."""
-    return dumps(search_agent_memory_notes(query, module, tags, kind, status, limit))
+    """Synchronize and research the vault without using or changing preference."""
+    return dumps(
+        search_agent_memory_notes(
+            query, module, tags, kind, status, limit, offset
+        )
+    )
+
+
+@mcp.tool()
+def recall_notes(
+    episode_id: str,
+    limit: int = 7,
+) -> str:
+    """Recall intuition from query, note activation, and active-note associations."""
+    return dumps(recall_agent_memory_notes(episode_id, limit))
 
 
 @mcp.tool()

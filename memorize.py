@@ -1,4 +1,5 @@
 import os
+import uuid
 from datetime import datetime
 from typing import Any
 
@@ -8,6 +9,7 @@ from .common import (
     normalize_links,
     normalize_module,
     normalize_tags,
+    parse_front_matter,
     resolve_path,
     sanitize_filename,
     sanitize_tag,
@@ -18,7 +20,12 @@ def write_vault_file(relative_path: str, metadata: dict[str, Any], body: str) ->
     """Compile front matter and write to disk."""
     full_path = resolve_path(relative_path)
     today = datetime.now().strftime("%Y-%m-%d")
-    metadata.setdefault("created", today)
+    existing_metadata: dict[str, Any] = {}
+    if os.path.isfile(full_path):
+        with open(full_path, encoding="utf-8") as file:
+            existing_metadata, _ = parse_front_matter(file.read())
+    metadata.setdefault("id", existing_metadata.get("id") or f"mem-{uuid.uuid4().hex}")
+    metadata.setdefault("created", existing_metadata.get("created") or today)
     metadata["updated"] = today
     formatted_content = format_front_matter(metadata, body)
     os.makedirs(os.path.dirname(full_path), exist_ok=True)

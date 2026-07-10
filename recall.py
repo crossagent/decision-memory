@@ -7,12 +7,17 @@ from .common import (
     AGENT_MEMORY_ROOT,
     BASE_DIR,
     WIKI_LINK_RE,
+    note_id_for,
     normalize_module,
-    normalize_tags,
     parse_front_matter,
     resolve_agent_memory_path,
     resolve_path,
-    sanitize_tag,
+)
+from .index import (
+    public_results,
+    recall_notes_index,
+    search_notes_index,
+    sync_memory_index,
 )
 
 
@@ -63,6 +68,7 @@ def load_note(path: str) -> dict[str, Any]:
     metadata, body = parse_front_matter(content)
     rel_path = os.path.relpath(full_path, BASE_DIR).replace("\\", "/")
     return {
+        "id": note_id_for(rel_path, metadata),
         "path": rel_path,
         "title": metadata.get("title") or os.path.splitext(os.path.basename(rel_path))[0],
         "module": metadata.get("module"),
@@ -133,48 +139,21 @@ def search_agent_memory_notes(
     kind: str | None = None,
     status: str | None = None,
     limit: int = 20,
+    offset: int = 0,
 ) -> list[dict[str, Any]]:
-    """Search notes by text and metadata filters (Recalling & Awaking)."""
-    required_tags = set(normalize_tags(tags))
-    query_text = (query or "").lower().strip()
-    kind_filter = sanitize_tag(kind) if kind else None
-    status_filter = status.lower().strip() if status else None
+    """Perform rigorous, preference-free research across agent memory."""
+    sync_memory_index()
+    return public_results(
+        search_notes_index(query, module, tags, kind, status, limit, offset)
+    )
 
-    results: list[dict[str, Any]] = []
-    for path in agent_memory_note_paths(module):
-        note = load_note(path)
-        note_tags = set(normalize_tags(note["tags"]))
-        if required_tags and not required_tags.issubset(note_tags):
-            continue
-        if kind_filter and sanitize_tag(str(note["kind"])) != kind_filter:
-            continue
-        if status_filter and str(note["status"]).lower() != status_filter:
-            continue
-        haystack = "\n".join(
-            [
-                note["path"],
-                str(note["title"]),
-                str(note["kind"]),
-                " ".join(note["tags"]),
-                note["body"],
-            ]
-        ).lower()
-        if query_text and query_text not in haystack:
-            continue
-        results.append(
-            {
-                "path": note["path"],
-                "title": note["title"],
-                "module": note["module"],
-                "kind": note["kind"],
-                "status": note["status"],
-                "tags": note["tags"],
-                "links": note["links"],
-            }
-        )
-        if len(results) >= max(1, limit):
-            break
-    return results
+
+def recall_agent_memory_notes(
+    episode_id: str,
+    limit: int = 7,
+) -> list[dict[str, Any]]:
+    """Awaken preference-shaped intuitive candidates for the current episode."""
+    return public_results(recall_notes_index(episode_id, limit))
 
 
 def get_backlinks(note_ref: str) -> list[dict[str, Any]]:

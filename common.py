@@ -1,11 +1,15 @@
 import os
 import re
+import uuid
 from typing import Any
 
-BASE_DIR = os.path.abspath(os.environ.get("MEMORY_VAULT_PATH", os.path.join(os.path.dirname(__file__), "..")))
+BASE_DIR = os.path.abspath(
+    os.environ.get("MEMORY_VAULT_PATH", os.path.join(os.path.dirname(__file__), ".."))
+)
 AGENT_MEMORY_ROOT = "agent-memory"
 AGENT_MEMORY_MODULES = ("model", "simulation", "control", "perception", "learning")
 WIKI_LINK_RE = re.compile(r"\[\[([^\]|#]+)(?:[|#][^\]]*)?\]\]")
+LEGACY_NOTE_NAMESPACE = uuid.UUID("4dd0ce1b-c672-47ae-8746-49fd98555781")
 
 
 def resolve_path(relative_path: str) -> str:
@@ -146,3 +150,12 @@ def normalize_module(module: str) -> str:
             f"Must be one of {AGENT_MEMORY_MODULES}"
         )
     return module
+
+
+def note_id_for(path: str, metadata: dict[str, Any] | None = None) -> str:
+    """Return a durable note ID, with a deterministic fallback for legacy notes."""
+    explicit_id = str((metadata or {}).get("id") or "").strip()
+    if explicit_id:
+        return explicit_id
+    normalized_path = path.replace("\\", "/").strip("/").lower()
+    return f"legacy-{uuid.uuid5(LEGACY_NOTE_NAMESPACE, normalized_path).hex}"
